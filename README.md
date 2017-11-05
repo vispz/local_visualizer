@@ -63,4 +63,4 @@ Python 2.7 (requires only std libraries).
 5. `write`: Directly write text to the html document (or pass in a pandas dataframe)
 6. `figure`: Context manager which accepts the kwargs of `plt.figure` and returns a `plt.figure` object`
 7. `start`: Applicable if `LocalViz` was initialized with `lazy=True`. Starts the server and creates the html file
-8. `close`: Deletes the html file.
+8. `close`: Deletes the html file
