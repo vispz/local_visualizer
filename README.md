@@ -60,7 +60,7 @@ Python 2.7 (requires only std libraries).
 2. `br`: line break
 3. `hr`: Horizontal rule with line breaks
 4. `h1`, `h2`, ..., `h6`: Headers
-5. `write`: Directly write text to the html document (or pass in a pandas dataframe)
-6. `figure`: Context manager which accepts the kwargs of `plt.figure` and returns a `plt.figure` object`
+5. `write`: Directly write text to the html document (or pass in a `pandas.DataFrame`)
+6. `figure`: Context manager which accepts the kwargs of `plt.figure` and returns a `plt.figure` object
 7. `start`: Applicable if `LocalViz` was initialized with `lazy=True`. Starts the server and creates the html file
 8. `close`: Deletes the html file
