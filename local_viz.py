@@ -47,7 +47,7 @@ Sample Usage::
         [df, pd.DataFrame(np.random.randn(10, 4), columns=list('BCDE'))],
         axis=1,
     )
-    lviz.write(df.to_html())
+    lviz.write(df)
 
 Output
 ======
@@ -188,7 +188,7 @@ class HtmlGenerator(object):
 
     def __init__(self, output_fl=None):
         self.output_fl = output_fl
-        self.write(text=HTML_BOILERPLATE)
+        self.write(HTML_BOILERPLATE)
         for l in HEADER_LEVELS:
             setattr(
                 self,
@@ -230,7 +230,18 @@ class HtmlGenerator(object):
         )
         fig_fl.close()
 
-    def write(self, text):
+    def write(self, text_or_df):
+        """Appends the text or a pandas df to the output file.
+
+        :param text_or_df: The string or the pandas dataframe to be written to
+            file.
+        :type text_or_df: str or pandas.DataFrame
+        """
+        if isinstance(text_or_df, str):
+            text = text_or_df
+        else:
+            # Assume it is a pandas dataframe
+            text = text_or_df.to_html()
         with open(self.output_fl, 'a+') as outfile:
             outfile.write('{s}\n'.format(s=text))
 

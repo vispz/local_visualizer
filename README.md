@@ -46,7 +46,7 @@ Usage
         [df, pd.DataFrame(np.random.randn(10, 4), columns=list('BCDE'))],
         axis=1,
     )
-    lviz.write(df.to_html())
+    lviz.write(df)
 ```
 
 Output
