@@ -1,16 +1,13 @@
-Simple api to visualize the plots in a script.
+Simple python api to visualize the plots in a script.
 
-Motivation
-==========
+### Motivation
 * When moving from an IPython notebook to a script, we lose the diagnostics
     of visualizing pandas as tables and matplotlib plots.
 * :class:`LocalViz` starts a local http server and creates a html file to
     which pandas tables and matplotlib plots can be sent over.
 * The html file is dynamically updated for long running scripts.
 
-Usage
-=====
-
+### Usage
 ``` python
 
     import logging, sys, numpy as np, pandas as pd, matplotlib.pyplot as plt
@@ -49,10 +46,21 @@ Usage
     lviz.write(df)
 ```
 
-Output
-======
-
+### Output
 This starts a HTTPServer and creates a html file which is dynamically updated
 each time ``lviz`` is called.
 
 ![Output image]( https://i.imgur.com/jjwvAX2.png "The output of the above commands")
+
+### Support and Requirements
+Python 2.7 (requires only std libraries).
+
+### API methods
+1. `p`: paragraph
+2. `br`: line break
+3. `hr`: Horizontal rule with line breaks
+4. `h1`, `h2`, ..., `h6`: Headers
+5. `write`: Directly write text to the html document (or pass in a pandas dataframe)
+6. `figure`: Context manager which accepts the kwargs of `plt.figure` and returns a `plt.figure` object`
+7. `start`: Applicable if `LocalViz` was initialized with `lazy=True`. Starts the server and creates the html file
+8. `close`: Deletes the html file.
