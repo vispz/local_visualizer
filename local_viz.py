@@ -57,14 +57,18 @@ each time ``lviz`` is called. See https://i.imgur.com/jjwvAX2.png for the
 output of the above commands.
 """
 import base64
-import BaseHTTPServer
+try:
+    import BaseHTTPServer
+    import SimpleHTTPServer
+except ModuleNotFoundError:
+    import http.server as SimpleHTTPServer
+    import http.server as BaseHTTPServer
 import contextlib
 import functools
 import io
 import logging
 import os
 import socket
-import SimpleHTTPServer
 import tempfile
 import threading
 
@@ -224,6 +228,7 @@ class HtmlGenerator(object):
         plt.savefig(fig_fl, format='png')
         fig_fl.seek(0)
         fig_png = base64.b64encode(fig_fl.getvalue())
+        fig_png = fig_png.decode('ascii')
         self.write(
             '<img src="data:image/png;base64,{fig_png}" '
             'width="500"><br/>'.format(fig_png=fig_png),
