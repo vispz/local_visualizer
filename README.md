@@ -10,6 +10,10 @@ Simple python api to visualize the plots in a script.
 * Documentation: https://local-visualizer.readthedocs.io
 * PyPI: https://pypi.python.org/pypi/local-visualizer/
 
+## Installation
+``` bash
+pip install local-visualizer
+```
 
 ### Motivation
 * When moving from an IPython notebook to a script, we lose the diagnostics
