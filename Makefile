@@ -58,7 +58,8 @@ test: virtualenv_run ## run tests
 	@tox
 	
 docs: virtualenv_run ## generate Sphinx HTML documentation, including API docs
-	@tox -e docs	
+	@tox -e docs
+	echo 'To view docs: `cd docs/build/html && python -m SimpleHTTPServer 4111`'
 
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
