@@ -155,6 +155,19 @@ class LocalViz(object):
     this class.
 
     See module docstring for usage.
+
+    :ivar html_file: Path to the html file to write to. If the file
+        exists already it will be overwritten. If ``None`` is passed in,
+        the class will create a temp file.
+    :vartype html_file: str or NoneType
+    :ivar run_server: Whether the server should started in the background.
+    :vartype run_server: bool
+    :ivar port: The port at which the server is to be started.
+    :vartype port: int
+    :ivar _html_gen: A container for the html generation.
+    :vartype _html_gen: HtmlGenerator
+    :ivar is_started: Has the start been called.
+    :vartype is_started: bool
     """
 
     def __init__(self, lazy=False, html_file=None, run_server=True, port=9111):
@@ -163,18 +176,6 @@ class LocalViz(object):
         :param lazy: Whether the server should started and the html file
             be created lazily (should call the :meth:`start`, explicitly).
         :type lazy: bool
-        :ivar html_file: Path to the html file to write to. If the file
-            exists already it will be overwritten. If ``None`` is passed in,
-            the class will create a temp file.
-        :vartype html_file: str or NoneType
-        :ivar run_server: Whether the server should started in the background.
-        :vartype run_server: bool
-        :ivar port: The port at which the server is to be started.
-        :vartype port: int
-        :ivar _html_gen: A container for the html generation.
-        :vartype _html_gen: HtmlGenerator
-        :ivar is_started: Has the start been called.
-        :vartype is_started: bool
         """
         self.html_file = html_file
         self.port = port
