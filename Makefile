@@ -1,7 +1,7 @@
 VIRTUALENV_RUN_TARGET = virtualenv_run-dev
 VIRTUALENV_RUN_REQUIREMENTS = requirements.txt requirements-dev.txt
 
-.PHONY: clean clean-test clean-pyc clean-build docs help
+.PHONY: clean clean-build clean-docs clean-test clean-pyc docs help
 
 .DEFAULT_GOAL := help
 define BROWSER_PYSCRIPT
@@ -30,8 +30,9 @@ BROWSER := python -c "$$BROWSER_PYSCRIPT"
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
-	rm -rf venv/
+clean: clean-build clean-docs clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
+	rm -rf virtaulenv_run/
+	rm -rf virtaulenv_run-dev/
 
 clean-build: ## remove build artifacts
 	rm -fr build/
@@ -39,6 +40,10 @@ clean-build: ## remove build artifacts
 	rm -fr .eggs/
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
+
+clean-docs: ## Clean doc builds
+	rm -rf docs/source/modules/
+	rm -rf docs/build/
 
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
