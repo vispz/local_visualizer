@@ -2,7 +2,7 @@
 
 """Top-level package for local_viz."""
 
-from local_viz import LocalViz # noqa
+from local_visualizer import LocalViz # noqa
 
 
 __author__ = """Vishnu P Sreenivasan"""

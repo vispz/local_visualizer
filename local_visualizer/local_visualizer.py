@@ -23,7 +23,7 @@ Sample Usage::
     # Create the local visualizer instance
     lviz = local_viz.LocalViz(html_file='lviz_test.html', port=9112)
     # INFO:root:Starting background server at: http://localhost:9112/.
-    # INFO:local_viz:Click: http://carpediem:9112/lviz_test.html or http://localhost:9112/lviz_test.html
+    # INFO:local_viz:Click: http://carpediem:9112/lviz_test.html or http://localhost:9112/lviz_test.html # noqa
 
     # Create plots which will be streamed to the html file.
     lviz.h3('Matplotlib :o')
@@ -60,7 +60,7 @@ import base64
 try:
     import BaseHTTPServer
     import SimpleHTTPServer
-except ModuleNotFoundError:
+except ModuleNotFoundError: # noqa (Python 3 only)
     import http.server as SimpleHTTPServer
     import http.server as BaseHTTPServer
 import contextlib
@@ -193,15 +193,15 @@ class HtmlGenerator(object):
     def __init__(self, output_fl=None):
         self.output_fl = output_fl
         self.write(HTML_BOILERPLATE)
-        for l in HEADER_LEVELS:
+        for lvl in HEADER_LEVELS:
             setattr(
                 self,
-                'h{l}'.format(l=l),
-                functools.partial(self.header, level=l),
+                'h{lvl}'.format(lvl=lvl),
+                functools.partial(self.header, level=lvl),
             )
 
     def header(self, text, level=4):
-        self.write('<h{l}>{text}</h{l}>'.format(text=text, l=level))
+        self.write('<h{lvl}>{text}</h{lvl}>'.format(text=text, lvl=level))
 
     def p(self, text):
         self.write('<p>{t}</p>'.format(t=text))
