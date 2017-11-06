@@ -27,7 +27,7 @@ pathlib2==2.3.0
 pbr==3.1.1
 pexpect==4.2.1
 pickleshare==0.7.4
-pkginfo-1.4.1
+pkginfo==1.4.1
 prompt-toolkit==1.0.15
 ptyprocess==0.5.2
 py==1.4.34
@@ -39,7 +39,7 @@ pytest-forked==0.2
 pytest-sugar==0.9.0
 pytest-xdist==1.20.1
 pytest==3.2.3
-requests-toolbelt-0.8.0
+requests-toolbelt==0.8.0
 requests==2.18.4
 scandir==1.6
 simplegeneric==0.8.1
@@ -47,9 +47,9 @@ snowballstemmer==1.2.1
 Sphinx==1.6.5
 sphinxcontrib-websupport==1.0.1
 termcolor==1.1.0
-tqdm-4.19.4
+tqdm==4.19.4
 traitlets==4.3.2
-twine-1.9.1
+twine==1.9.1
 typing==3.6.2
 urllib3==1.22
 wcwidth==0.1.7
