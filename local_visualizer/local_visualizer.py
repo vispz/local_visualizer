@@ -48,6 +48,7 @@ Sample Usage::
         axis=1,
     )
     lviz.write(df)
+    lviz.close()
 
 Output
 ======
@@ -77,9 +78,9 @@ import matplotlib.pyplot as plt
 
 log = logging.getLogger(__name__)
 
-
+#: The different HTML header levels.
 HEADER_LEVELS = range(1, 6)
-HTML_BOILERPLATE = """
+HTML_BEGIN_BOILERPLATE = """
 <!DOCTYPE html>
 <html>
     <head>
@@ -124,6 +125,26 @@ HTML_BOILERPLATE = """
     </head>
     <body>
 """
+HTML_END_BOILERPLATE = """
+    </body>
+    </html>
+"""
+
+
+def validate_lviz_started(method):
+    """Decorater for LocalViz methods to ensure the instance has been started.
+    """
+    @functools.wraps(method)
+    def validated_method(self, *args, **kwargs):
+        if not self.is_started:
+            raise RuntimeError(
+                '{f} was called before LocalViz was started. Please '
+                'start the visualizer with the `start` method.'.format(
+                    f=method.__name__,
+                ),
+            )
+        return method(self, *args, **kwargs)
+    return validated_method
 
 
 class LocalViz(object):
@@ -137,15 +158,46 @@ class LocalViz(object):
     """
 
     def __init__(self, lazy=False, html_file=None, run_server=True, port=9111):
+        """Constructor.
+
+        :param lazy: Whether the server should started and the html file
+            be created lazily (should call the :meth:`start`, explicitly).
+        :type lazy: bool
+        :ivar html_file: Path to the html file to write to. If the file
+            exists already it will be overwritten. If ``None`` is passed in,
+            the class will create a temp file.
+        :vartype html_file: str or NoneType
+        :ivar run_server: Whether the server should started in the background.
+        :vartype run_server: bool
+        :ivar port: The port at which the server is to be started.
+        :vartype port: int
+        :ivar _html_gen: A container for the html generation.
+        :vartype _html_gen: HtmlGenerator
+        :ivar is_started: Has the start been called.
+        :vartype is_started: bool
+        """
         self.html_file = html_file
         self.port = port
         self.run_server = run_server
+        self._html_gen = None
+        self.is_started = False
         if not lazy:
             self.start()
 
     def start(self):
+        """Creates the html file and possibly starts the bgd http server.
+
+        Mutates
+
+            * :attribute:`html_file`
+            * :attribute:`_html_gen`
+            * :attribute:`is_started`
+        """
         if self.run_server:
-            run_bgd_server(port=self.port, host='localhost')
+            run_bgd_server(
+                port=self.port,
+                host='localhost',
+            )
         if self.html_file:
             # Erase and create a new file.
             open(self.html_file, 'w').close()
@@ -155,6 +207,7 @@ class LocalViz(object):
                 suffix='.html',
             )
         self._html_gen = HtmlGenerator(output_fl=self.html_file)
+        # Copy over the public functions pf :class:`HtmlGenerator`.
         for name in dir(self._html_gen):
             if name.startswith('_'):
                 continue
@@ -169,15 +222,28 @@ class LocalViz(object):
                 fl=self.html_file.split('/')[-1],
             ),
         )
+        self.is_started = True
 
+    @validate_lviz_started
     def inform_cleanup(self):
+        """Informs the user which html file to delete at the end."""
         if self.html_file:
             log.info(
                 'After viewing the plots, please delete the '
                 'file: `{fl}`'.format(fl=self.html_file),
             )
 
+    @validate_lviz_started
     def close(self):
+        """Writes the closing html tags to the html file."""
+        self._html_gen.write(HTML_END_BOILERPLATE)
+
+    @validate_lviz_started
+    def del_html(self):
+        """Deletes the generated html file.
+
+        .. note:: Mutates ``self.html_file``.
+        """
         delete_files_silently([self.html_file])
         self.html_file = None
 
@@ -192,7 +258,7 @@ class HtmlGenerator(object):
 
     def __init__(self, output_fl=None):
         self.output_fl = output_fl
-        self.write(HTML_BOILERPLATE)
+        self.write(HTML_BEGIN_BOILERPLATE)
         for lvl in HEADER_LEVELS:
             setattr(
                 self,
@@ -201,15 +267,30 @@ class HtmlGenerator(object):
             )
 
     def header(self, text, level=4):
+        """Creates a header line of given level.
+
+        :param text: The html header text.
+        :type text: str
+        :param level: The level of the html header.
+        :type level: int
+        """
         self.write('<h{lvl}>{text}</h{lvl}>'.format(text=text, lvl=level))
 
     def p(self, text):
+        """Writes a paragraph tagged text.
+
+        :param text: The html paragraph text.
+        :type text: str
+        """
         self.write('<p>{t}</p>'.format(t=text))
 
     def br(self):
+        """Inserts a break line in the html file."""
         self.write('<br/>')
 
     def hr(self):
+        """Inserts a horizontal line wrapped in blank lines in the html file.
+        """
         self.write('<br/><hr/><br/>')
 
     @contextlib.contextmanager
@@ -218,7 +299,7 @@ class HtmlGenerator(object):
 
         Example usage::
 
-            with html_gen.figure(figsize=(10, 10)) as fig:
+            with lviz.figure(figsize=(10, 10)) as fig:
                 plt.plot(x, y)
                 plt.title('This is a title')
         """
@@ -252,7 +333,17 @@ class HtmlGenerator(object):
 
 
 def run_bgd_server(port, host='localhost'):
-    """Creates a simple http server in a daemon thread."""
+    """Creates a simple http server in a daemon thread.
+
+    :param host: The host id where the server has to be started,
+        ex. ``'localhost'``.
+    :type host: str
+    :param port: The port where the local server should serve.
+    :type port: int
+
+    :returns: A daemon thread running a simple http server in the background.
+    :type: threading.Thread
+    """
     logging.info(
         'Starting background server at: '
         'http://{h}:{p}/.'.format(h=host, p=port),
@@ -264,6 +355,7 @@ def run_bgd_server(port, host='localhost'):
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon = True
     thread.start()
+    return thread
 
 
 def delete_files_silently(files):

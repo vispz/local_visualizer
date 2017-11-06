@@ -58,6 +58,7 @@ df = pd.concat(
     axis=1,
 )
 lviz.write(df)
+lviz.close()
 ```
 
 ### Output
@@ -67,7 +68,7 @@ each time ``lviz`` is called.
 ![Output image]( https://i.imgur.com/jjwvAX2.png "The output of the above commands")
 
 ### Support and Requirements
-Python 2.7 (requires only std libraries).
+Python 2.7
 
 ### API methods
 1. `p`: paragraph
@@ -77,7 +78,8 @@ Python 2.7 (requires only std libraries).
 5. `write`: Directly write text to the html document (or pass in a `pandas.DataFrame`)
 6. `figure`: Context manager which accepts the kwargs of `plt.figure` and returns a `plt.figure` object
 7. `start`: Applicable if `LocalViz` was initialized with `lazy=True`. Starts the server and creates the html file
-8. `close`: Deletes the html file
+8. `close`: Completes the html file
+9. `del_html`: Deletes the html file
 
 ### Credits
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
