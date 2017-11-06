@@ -1,4 +1,8 @@
-## LocalVisualizer [![Build Status](https://travis-ci.org/psvishnu91/local_visualizer.svg?branch=master)](https://travis-ci.org/psvishnu91/local_visualizer)
+[![Documentation Status](https://readthedocs.org/projects/local-visualizer/badge/?version=latest)](http://local-visualizer.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/psvishnu91/local_visualizer.svg?branch=master)](https://travis-ci.org/psvishnu91/local_visualizer)
+[![PyPI version](https://badge.fury.io/py/local-visualizer.svg)](https://badge.fury.io/py/local-visualizer)
+
+## LocalVisualizer
 
 Simple python api to visualize the plots in a script.
 
