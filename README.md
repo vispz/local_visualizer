@@ -1,3 +1,5 @@
+## LocalVisualizer [![Build Status](https://travis-ci.org/psvishnu91/local_visualizer.svg?branch=master)](https://travis-ci.org/psvishnu91/local_visualizer)
+
 Simple python api to visualize the plots in a script.
 
 * Free software: MIT license
