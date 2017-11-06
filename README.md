@@ -10,7 +10,7 @@ Simple python api to visualize the plots in a script.
 * Documentation: https://local-visualizer.readthedocs.io
 * PyPI: https://pypi.python.org/pypi/local-visualizer/
 
-## Installation
+### Installation
 ``` bash
 pip install local-visualizer
 ```
@@ -24,41 +24,40 @@ pip install local-visualizer
 
 ### Usage
 ``` python
+import logging, sys, numpy as np, pandas as pd, matplotlib.pyplot as plt
+import local_visualizer
 
-    import logging, sys, numpy as np, pandas as pd, matplotlib.pyplot as plt
-    import local_visualizer
+plt.style.use('fivethirtyeight')
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-    plt.style.use('fivethirtyeight')
-    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+# Create the local visualizer instance
+lviz = local_visualizer.LocalViz(html_file='lviz_test.html', port=9112)
+# INFO:root:Starting background server at: http://localhost:9112/.
+# INFO:local_visualizer:Click: http://carpediem:9112/lviz_test.html or http://localhost:9112/lviz_test.html
 
-    # Create the local visualizer instance
-    lviz = local_visualizer.LocalViz(html_file='lviz_test.html', port=9112)
-    # INFO:root:Starting background server at: http://localhost:9112/.
-    # INFO:local_visualizer:Click: http://carpediem:9112/lviz_test.html or http://localhost:9112/lviz_test.html
+# Create plots which will be streamed to the html file.
+lviz.h3('Matplotlib :o')
+lviz.p(
+    'Wrap your plots in the figure context manager which takes '
+    'in the kwargs of plt.figure and returns a plt.figure object.',
+)
 
-    # Create plots which will be streamed to the html file.
-    lviz.h3('Matplotlib :o')
-    lviz.p(
-        'Wrap your plots in the figure context manager which takes '
-        'in the kwargs of plt.figure and returns a plt.figure object.',
-    )
+with lviz.figure(figsize=(10, 8)) as fig:
+    x = np.linspace(-10, 10, 1000)
+    plt.plot(x, np.sin(x))
+    plt.title('Sine test')
 
-    with lviz.figure(figsize=(10, 8)) as fig:
-        x = np.linspace(-10, 10, 1000)
-        plt.plot(x, np.sin(x))
-        plt.title('Sine test')
+lviz.hr()
 
-    lviz.hr()
+# Visualize pandas dataframes as tables.
+lviz.h3('Pandas dataframes')
 
-    # Visualize pandas dataframes as tables.
-    lviz.h3('Pandas dataframes')
-
-    df = pd.DataFrame({'A': np.linspace(1, 10, 10)})
-    df = pd.concat(
-        [df, pd.DataFrame(np.random.randn(10, 4), columns=list('BCDE'))],
-        axis=1,
-    )
-    lviz.write(df)
+df = pd.DataFrame({'A': np.linspace(1, 10, 10)})
+df = pd.concat(
+    [df, pd.DataFrame(np.random.randn(10, 4), columns=list('BCDE'))],
+    axis=1,
+)
+lviz.write(df)
 ```
 
 ### Output
