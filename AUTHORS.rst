@@ -10,4 +10,4 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Jimmy Retzlaff <https://github.com/jretz/>
