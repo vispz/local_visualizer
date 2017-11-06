@@ -1,0 +1,9 @@
+coverage
+flake8
+ipdb
+mock
+pytest
+pytest-cov
+pytest-sugar
+pytest-xdist
+Sphinx
