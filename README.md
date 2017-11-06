@@ -1,7 +1,7 @@
 Simple python api to visualize the plots in a script.
 
 * Free software: MIT license
-* Documentation: https://local-viz.readthedocs.io.
+* Documentation: https://local-visualizer.readthedocs.io.
 
 
 ### Motivation
