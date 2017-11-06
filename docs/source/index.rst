@@ -20,4 +20,7 @@ Table of Contents
    :maxdepth: 1
    :glob:
 
+   AUTHORS
+   CONTRIBUTING
+   HISTORY
    modules/*

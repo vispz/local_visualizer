@@ -1,24 +1,14 @@
-# Config file for automatic testing at travis-ci.org
-# This file will be regenerated if you run travis_pypi_setup.py
-
 language: python
 python:
-  - 2.7
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- 2.7
 install: pip install -U tox-travis
-
-# command to run tests, e.g. python setup.py test
 script: tox
-
-# After you create the Github repo and add it to Travis, run the
-# travis_pypi_setup.py script to finish PyPI deployment setup
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   user: visp
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: y892jH/jHGEdM8pXlAz5OIJqDZUpFpE0sYGsxVQM4Nr1vDCfJr+E7x/cWFzWIE55Xs7MfPyzJDbaymPOMJA53B7UiremqNip3niu8hn9ePoOsPtutup0ayEQqBFjbBRb63D5I5m01gV3TV+GZtoPnUGZxwI5IT9zvHNh1TMyKpIY+nVxU81I1XPSX3H7OPYVlUxNGwognaUZbgd2NEFjeOItWQxj15CyDvdZR81eOASw4HxrcGBSyPkbQlil71Z67IJjQMC7U+pR93VmFmgISvAhsh8Ix52xoxFiQo/ph3yCnJ2ElxKq6nhOGR1uR2rkQgQVvUK2HCXieIvKCH1hVx+2/zhha6vlPndgxpyrdChpSt8vgFpvgdx2ESi9GGdBDTxgAY1ek1Dwf6lthe7biQnVjyBaT148DHbXRxvS2nY/9/wgGBUm02eJJTKqJW6kD0isuwhKYTJYS0LMKyOCst+22u2H4YYtpvSoiw/ECTZV616s+691jXU1kfbn2khpp2fvc4meVnBC5ZuE+f3JmBAFFlNUhgsm27g7r5lLfICw1BTfUl+rG2eDRWMvqsIVMcTOj9oj3J9LJQmSBq0wnYfziRD82mgEcVcvM51TSj5KbnwIOPkUD/TW+wthbZ+W7Z72EoQ4JH4+D2aIHuUdfGQzVjfK4TGSjoZIxvmNIOA=
   on:
     tags: true
     repo: psvishnu91/local_visualizer
