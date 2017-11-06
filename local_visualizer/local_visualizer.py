@@ -189,9 +189,9 @@ class LocalViz(object):
 
         Mutates
 
-            * :attribute:`html_file`
-            * :attribute:`_html_gen`
-            * :attribute:`is_started`
+            * ``self.html_file``
+            * ``self._html_gen``
+            * ``self.is_started``
         """
         if self.run_server:
             run_bgd_server(

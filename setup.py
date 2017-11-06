@@ -23,7 +23,7 @@ test_requirements = [
 
 setup(
     name='local_visualizer',
-    version='0.1.2',
+    version='0.2.0',
     description="Simple python api to visualize the plots in a script.",
     long_description=readme + '\n\n' + history,
     author="Vishnu P Sreenivasan",
