@@ -69,11 +69,13 @@ docs: virtualenv_run ## generate Sphinx HTML documentation, including API docs
 servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
-release: clean ## package and upload a release
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+release: dist virtualenv_run ## package and upload a release
+	virtualenv_run-dev/bin/twine upload dist/*
 
-dist: clean ## builds source and wheel package
+README.rst: virtualenv_run ## Convert README.md to README.rst
+	pandoc --from=markdown --to=rst --output=README.rst README.md
+
+dist: README.rst clean ## builds source and wheel package
 	python setup.py sdist
 	python setup.py bdist_wheel
 	ls -l dist

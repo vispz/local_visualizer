@@ -5,7 +5,7 @@
 
 from setuptools import setup, find_packages
 
-with open('README.md') as readme_file:
+with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 with open('docs/source/HISTORY.rst') as history_file:
@@ -23,7 +23,7 @@ test_requirements = [
 
 setup(
     name='local_visualizer',
-    version='0.1.0',
+    version='0.1.1',
     description="Simple python api to visualize the plots in a script.",
     long_description=readme + '\n\n' + history,
     author="Vishnu P Sreenivasan",
