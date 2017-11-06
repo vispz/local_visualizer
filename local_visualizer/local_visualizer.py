@@ -15,15 +15,15 @@ Usage
 Sample Usage::
 
     import logging, sys, numpy as np, pandas as pd, matplotlib.pyplot as plt
-    import local_viz
+    import local_visualizer
 
     plt.style.use('fivethirtyeight')
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
     # Create the local visualizer instance
-    lviz = local_viz.LocalViz(html_file='lviz_test.html', port=9112)
+    lviz = local_visualizer.LocalViz(html_file='lviz_test.html', port=9112)
     # INFO:root:Starting background server at: http://localhost:9112/.
-    # INFO:local_viz:Click: http://carpediem:9112/lviz_test.html or http://localhost:9112/lviz_test.html # noqa
+    # INFO:local_visualizer:Click: http://carpediem:9112/lviz_test.html or http://localhost:9112/lviz_test.html # noqa
 
     # Create plots which will be streamed to the html file.
     lviz.h3('Matplotlib :o')
